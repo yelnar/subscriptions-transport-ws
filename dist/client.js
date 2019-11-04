@@ -142,9 +142,11 @@ var SubscriptionClient = (function () {
                     }
                     else {
                         if (observer.next) {
-                            observer.next(result);
                             if (onResult) {
                                 onResult(result);
+                            }
+                            else {
+                                observer.next(result);
                             }
                         }
                     }
