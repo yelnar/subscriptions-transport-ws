@@ -172,7 +172,10 @@ export class SubscriptionClient {
     }
   }
 
-  public request(request: OperationOptions, onResult?: (result: any) => any): Observable<ExecutionResult> {
+  public request(
+      request: OperationOptions,
+      bypassOptions?: { filter: (result: any) => boolean, callback: (result: any) => any },
+    ): Observable<ExecutionResult> {
     const getObserver = this.getObserver.bind(this);
     const executeOperation = this.executeOperation.bind(this);
     const unsubscribe = this.unsubscribe.bind(this);
@@ -203,8 +206,8 @@ export class SubscriptionClient {
             }
           } else {
             if ( observer.next ) {
-              if (onResult) {
-                onResult(result);
+              if (bypassOptions && bypassOptions.filter(result)) {
+                bypassOptions.callback(result);
               } else {
                 observer.next(result);
               }

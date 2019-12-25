@@ -72,7 +72,10 @@ export declare class SubscriptionClient {
     constructor(url: string, options?: ClientOptions, webSocketImpl?: any, webSocketProtocols?: string | string[]);
     readonly status: any;
     close(isForced?: boolean, closedByUser?: boolean): void;
-    request(request: OperationOptions, onResult?: (result: any) => any): Observable<ExecutionResult>;
+    request(request: OperationOptions, bypassOptions?: {
+        filter: (result: any) => boolean;
+        callback: (result: any) => any;
+    }): Observable<ExecutionResult>;
     on(eventName: string, callback: ListenerFn, context?: any): Function;
     onConnected(callback: ListenerFn, context?: any): Function;
     onConnecting(callback: ListenerFn, context?: any): Function;

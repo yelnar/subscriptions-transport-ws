@@ -116,7 +116,7 @@ var SubscriptionClient = (function () {
             }
         }
     };
-    SubscriptionClient.prototype.request = function (request, onResult) {
+    SubscriptionClient.prototype.request = function (request, bypassOptions) {
         var _a;
         var getObserver = this.getObserver.bind(this);
         var executeOperation = this.executeOperation.bind(this);
@@ -142,8 +142,8 @@ var SubscriptionClient = (function () {
                     }
                     else {
                         if (observer.next) {
-                            if (onResult) {
-                                onResult(result);
+                            if (bypassOptions && bypassOptions.filter(result)) {
+                                bypassOptions.callback(result);
                             }
                             else {
                                 observer.next(result);
